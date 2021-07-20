@@ -4,11 +4,12 @@ import hello.hello.spring.domain.Member;
 import hello.hello.spring.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-
+@Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
 
@@ -22,9 +23,12 @@ public class MemberService {
     //회원가입
     public Long join(Member member){
         //중복 회원은 안된다
+
+
         validateDuplicateMember(member);//중복회원검증
         memberRepository.save(member);
         return member.getId();
+
     }
 
     private void validateDuplicateMember(Member member) {
